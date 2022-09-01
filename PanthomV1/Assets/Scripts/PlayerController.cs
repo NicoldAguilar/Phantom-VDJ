@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float velocity = 5, jumpForce = 3;
+    public float velocity = 5, jumpForce = 100;
 
     Rigidbody2D rb;
     SpriteRenderer sr;
     Animator animator;
+    Vector3 lastCheckpointPosition;
 
     bool saltos;
 
@@ -62,6 +63,19 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Estas muerto");
         }
+        if(other.gameObject.tag == "DarkHole")
+        {
+            if (lastCheckpointPosition != null)
+            {
+                transform.position = lastCheckpointPosition;
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Trigger funciona");
+        lastCheckpointPosition = transform.position; //guarda la ultima posición del trasform
     }
 
     private void ChangeAnimation(int animation)
@@ -72,3 +86,4 @@ public class PlayerController : MonoBehaviour
     }
 
 }
+
